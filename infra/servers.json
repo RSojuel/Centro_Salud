@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "CentroSaludDB",
+      "Group": "Servers",
+      "Host": "salud_postgres",
+      "Port": 5432,
+      "MaintenanceDB": "salud_db",
+      "Username": "salud",
+      "SSLMode": "prefer"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:16
+    container_name: salud_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: salud
+      POSTGRES_PASSWORD: salud123
+      POSTGRES_DB: salud_db
+    volumes:
+      - salud_pg_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U salud -d salud_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: salud_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@salud.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    depends_on:
+      - postgres
+    ports:
+      - "5051:80"
+    volumes:
+      - salud_pgadmin_data:/var/lib/pgadmin
+      - ./servers.json:/pgadmin4/servers.json:ro
+
+
+volumes:
+  salud_pg_data:
+  salud_pgadmin_data:
